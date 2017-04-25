@@ -197,15 +197,15 @@ for name in dirs:
 			print('%s no update' % name)
 		else:
 			print('%s update' % name)
-			scriptPath = '%s/%s/postinstall.sh' % (path, name)
-			if os.path.isfile(scriptPath) and os.access(scriptPath, os.X_OK):
-				# TODO add to `release`
-				print('postinstall script found')
-				print('===')
-				proc = subprocess.Popen([scriptPath], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-				scriptOutput = proc.stdout.read()
-				print(scriptOutput.decode('utf8'))
-				print('===')
+#			scriptPath = '%s/%s/postinstall.sh' % (path, name)
+#			if os.path.isfile(scriptPath) and os.access(scriptPath, os.X_OK):
+#				# TODO add to `release`
+#				print('postinstall script found')
+#				print('===')
+#				proc = subprocess.Popen([scriptPath], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+#				scriptOutput = proc.stdout.read()
+#				print(scriptOutput.decode('utf8'))
+#				print('===')
 			# if composer: run `composer insatall`
 			# if npm: run `npm install`
 			# insert `release`
