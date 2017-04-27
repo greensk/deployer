@@ -35,8 +35,7 @@ def deployMysql(db, projectId):
 		#GRANT ALL ON db1.* TO 'jeffrey'@'localhost';
 
 		addUserQuery = 'GRANT ALL ON `%s`.* TO %%s@localhost IDENTIFIED BY %%s' % mysqlDb
-		print(addUserQuery)
-		mysqlCursor.execute(addUserQuery, (mysqlUser, mysqlDb))
+		mysqlCursor.execute(addUserQuery, (mysqlUser, mysqlPassword))
 
 		mysqlCursor.execute('FLUSH PRIVILEGES')
 
@@ -55,11 +54,10 @@ def outputMysql(path, params):
 		f = open('%s/db_params.php' % path, 'w')
 		f.write("<?php\n")
 		f.write("return array(\n")
-		f.write("\t'type' => 'mysql'\n")
-		f.write("\t'host' => 'localhost'\n")
-		f.write("\t'port' => '3306'\n")
-		f.write("\t'db' => '%s'\n" % params[0])
-		f.write("\t'user' => '%s'\n" % params[1])
+		f.write("\t'type' => 'mysql',\n")
+		f.write("\t'host' => 'localhost:3306',\n")
+		f.write("\t'db' => '%s',\n" % params[0])
+		f.write("\t'user' => '%s',\n" % params[1])
 		f.write("\t'password' => '%s'\n" % params[2])
 		f.write(");\n")
 		f.close()
@@ -77,6 +75,7 @@ def deployMail (domain, mailConfig, userAddress, subdomain, mysql):
 		text += "Имя пользователя mysql: %s\n" % mysql[1]
 		text += "Пароль: %s\n" % mysql[2]
 		text += "Эта информация также продублирована в файле db_params.php в корне проекта.\n"
+		text += "Для администрирования базы данных вы можете использовать веб-интерфейс: %s (доступен только из внутренней сети университета)\n" % mailConfig['dbadmin']
 		
 	msg = MIMEText(text.encode('utf-8'), 'plain', 'UTF-8')
 		
