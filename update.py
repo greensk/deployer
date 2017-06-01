@@ -186,16 +186,19 @@ for name in dirs:
 	gitPath = "%s/%s/.git" % (path, name)
 	# update git url
 	if os.path.isdir(dirPath) and os.path.isdir(gitPath):
-		repo = Repo(dirPath)
-		origin = repo.remote('origin')
-		assert origin.exists()
+		try:
+			repo = Repo(dirPath)
+			origin = repo.remote('origin')
+			assert origin.exists()
 
-		currentCommit = repo.commit()
-		result = origin.pull()[0]
-		if currentCommit == result.commit:
-			print('%s no update' % name)
-		else:
-			print('%s update' % name)
+			currentCommit = repo.commit()
+			result = origin.pull()[0]
+			if currentCommit == result.commit:
+				print('%s no update' % name)
+			else:
+				print('%s update' % name)
+		except Exception as e:
+			print(e)
 #			scriptPath = '%s/%s/postinstall.sh' % (path, name)
 #			if os.path.isfile(scriptPath) and os.access(scriptPath, os.X_OK):
 #				# TODO add to `release`
