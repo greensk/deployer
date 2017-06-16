@@ -197,6 +197,11 @@ for name in dirs:
 				print('%s no update' % name)
 			else:
 				print('%s update' % name)
+			composerFile = '%s/%s/composer.json' % (path, name)
+			if os.path.isfile(composerFile):
+				# proc = subprocess.Popen(['composer install'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+				# scriptOutput = proc.stdout.read()
+				os.system('cd %s && composer install' % dirPath)
 		except Exception as e:
 			print(e)
 #			scriptPath = '%s/%s/postinstall.sh' % (path, name)
