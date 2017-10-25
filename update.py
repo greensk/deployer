@@ -191,6 +191,10 @@ for name in dirs:
 			origin = repo.remote('origin')
 			assert origin.exists()
 
+			originUrl = origin.url
+			if not originUrl.endswith('.git'):
+				continue
+
 			currentCommit = repo.commit()
 			result = origin.pull()[0]
 			if currentCommit == result.commit:
